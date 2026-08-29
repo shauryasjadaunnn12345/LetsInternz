@@ -1,0 +1,37 @@
+{% extends "email/base_email.html" %}
+
+{% block title %}Your application status updated to {{ status_label }}{% endblock %}
+
+{% block content %}
+<p style="margin:0 0 4px; font-size:13px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; color:{{ status_color }};">
+  Status update
+</p>
+<h1 style="margin:4px 0 16px; font-size:20px; font-weight:700; color:#16213E; line-height:1.35;">
+  Your application status updated to {{ status_label }}
+</h1>
+
+<p style="margin:0 0 20px; font-size:14px; color:#4B5061; line-height:1.6;">
+  Hi {{ user_display_name }}, your application to <strong>{{ application.role_display }}</strong>
+  at <strong>{{ application.company_display }}</strong> has moved to a new stage.
+</p>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F7FA; border-radius:12px; margin-bottom:24px;">
+  <tr>
+    <td style="padding:16px 20px; text-align:center;">
+      <span style="display:inline-block; padding:6px 16px; border-radius:999px; font-size:13px; font-weight:700; background-color:{{ status_bg }}; color:{{ status_color }};">
+        {{ status_label }}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="background-color:#F2A93B; border-radius:8px;">
+      <a href="{{ app_url }}/applications" style="display:inline-block; padding:12px 24px; font-size:14px; font-weight:700; color:#16213E; text-decoration:none;">
+        View in tracker
+      </a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

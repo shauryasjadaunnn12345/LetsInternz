@@ -1,0 +1,8 @@
+# Production-only dependencies (WSGI server, SES email, static file serving,
+# error tracking). Install with: pip install -r requirements/production.txt
+-r base.txt
+
+django-ses==4.7.2
+gunicorn==26.0.0
+whitenoise==6.12.0
+sentry-sdk==2.66.1

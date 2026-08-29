@@ -1,0 +1,52 @@
+{% extends "email/base_email.html" %}
+
+{% block title %}Deadline in {{ days_left }} day{{ days_left|pluralize }}{% endblock %}
+
+{% block content %}
+<p style="margin:0 0 4px; font-size:13px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; color:#D08A2C;">
+  Deadline in {{ days_left }} day{{ days_left|pluralize }}
+</p>
+<h1 style="margin:4px 0 16px; font-size:20px; font-weight:700; color:#16213E; line-height:1.35;">
+  {{ internship.title }} at {{ internship.company }}
+</h1>
+
+<p style="margin:0 0 20px; font-size:14px; color:#4B5061; line-height:1.6;">
+  Hi {{ user_display_name }}, this internship you saved is closing soon.
+  Don't let it slip past — here's a quick recap:
+</p>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F7FA; border-radius:12px; margin-bottom:24px;">
+  <tr>
+    <td style="padding:16px 20px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="padding:4px 0; font-size:13px; color:#8A8F98;">Company</td>
+          <td style="padding:4px 0; font-size:13px; color:#16213E; font-weight:600; text-align:right;">{{ internship.company }}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0; font-size:13px; color:#8A8F98;">Location</td>
+          <td style="padding:4px 0; font-size:13px; color:#16213E; font-weight:600; text-align:right;">{{ internship.location }}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0; font-size:13px; color:#8A8F98;">Stipend</td>
+          <td style="padding:4px 0; font-size:13px; color:#16213E; font-weight:600; text-align:right;">{{ internship.stipend_display|default:"Not specified" }}</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 0; font-size:13px; color:#8A8F98;">Deadline</td>
+          <td style="padding:4px 0; font-size:13px; color:#C8503A; font-weight:700; text-align:right;">{{ internship.deadline|date:"F j, Y" }}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="background-color:#F2A93B; border-radius:8px;">
+      <a href="{{ internship.apply_link }}" style="display:inline-block; padding:12px 24px; font-size:14px; font-weight:700; color:#16213E; text-decoration:none;">
+        View &amp; Apply
+      </a>
+    </td>
+  </tr>
+</table>
+{% endblock %}

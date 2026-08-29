@@ -1,0 +1,14 @@
+# Development-only dependencies (debugging, testing, code quality).
+# Install with: pip install -r requirements/development.txt
+-r base.txt
+
+django-debug-toolbar==7.0.0
+ipython==9.16.1
+pytest==9.1.1
+pytest-django==4.13.0
+pytest-cov==7.1.0
+factory-boy==3.3.3
+Faker==40.36.0
+black==26.5.1
+flake8==7.3.0
+isort==8.0.1

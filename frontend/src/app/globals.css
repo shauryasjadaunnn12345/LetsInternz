@@ -1,0 +1,94 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ---------------------------------------------------------------------------
+ * LetsInternz design tokens
+ *
+ * Palette: cool paper background (not the cliché warm cream), deep ink for
+ * text/dark surfaces, a marigold accent — the flower Indian college campuses
+ * drape over every fresh start, from orientation day to placement season —
+ * plus teal for positive states and coral for alerts.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --color-ink: #16213e;
+  --color-ink-soft: #2f3b5c;
+  --color-paper: #f6f7f9;
+  --color-paper-raised: #ffffff;
+  --color-marigold: #f2a93b;
+  --color-marigold-dark: #d6890f;
+  --color-teal: #127c71;
+  --color-coral: #e4572e;
+  --color-slate: #64748b;
+  --color-border: #e2e5eb;
+
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-paper: var(--color-paper);
+  --color-paper-raised: var(--color-paper-raised);
+  --color-marigold: var(--color-marigold);
+  --color-marigold-dark: var(--color-marigold-dark);
+  --color-teal: var(--color-teal);
+  --color-coral: var(--color-coral);
+  --color-slate: var(--color-slate);
+  --color-border: var(--color-border);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Visible keyboard focus everywhere — never rely on browser defaults alone. */
+:focus-visible {
+  outline: 2px solid var(--color-marigold-dark);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dual-thumb range slider (stipend filter): both <input type="range"> tracks
+ * are transparent/pointer-events-none so only the thumbs are interactive,
+ * letting either handle be grabbed regardless of which is rendered on top. */
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-marigold-dark);
+  border: 2px solid var(--color-paper-raised);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-marigold-dark);
+  border: 2px solid var(--color-paper-raised);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
