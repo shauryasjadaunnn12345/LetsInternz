@@ -74,3 +74,4 @@ wcwidth==0.8.2
 zope.interface==8.5
 whitenoise==6.11.0
 gunicorn==23.0.0
+dj-database-url==2.1.0
