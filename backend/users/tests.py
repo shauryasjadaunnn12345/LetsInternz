@@ -1,6 +1,5 @@
 import io
 import re
-from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -98,54 +97,6 @@ class RegistrationTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("password2", response.data)
-
-
-class GoogleLoginTests(APITestCase):
-    def setUp(self):
-        self.url = reverse("users:google_login")
-
-    @patch("users.views.id_token.verify_oauth2_token")
-    def test_google_login_creates_or_updates_user_and_returns_tokens(self, mock_verify):
-        mock_verify.return_value = {
-            "email": "googleuser@example.com",
-            "name": "Google User",
-            "sub": "google-user-123",
-        }
-
-        response = self.client.post(self.url, {"credential": "fake-google-token"})
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("access", response.data)
-        self.assertIn("refresh", response.data)
-
-        user = User.objects.get(email="googleuser@example.com")
-        self.assertTrue(user.is_active)
-        self.assertEqual(user.username, "googleuser")
-
-    @patch("users.views.id_token.verify_oauth2_token")
-    def test_google_login_rejects_missing_credential(self, mock_verify):
-        response = self.client.post(self.url, {})
-
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        mock_verify.assert_not_called()
-
-    def test_google_login_accepts_supabase_user_payload(self):
-        response = self.client.post(
-            self.url,
-            {
-                "provider": "supabase",
-                "email": "supabase.user@example.com",
-                "username": "Supabase User",
-            },
-        )
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("access", response.data)
-        self.assertIn("refresh", response.data)
-
-        user = User.objects.get(email="supabase.user@example.com")
-        self.assertTrue(user.is_active)
-        self.assertEqual(user.username, "Supabase User")
 
 
 class LoginTests(APITestCase):

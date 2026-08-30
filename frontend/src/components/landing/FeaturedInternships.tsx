@@ -6,13 +6,15 @@ import Link from "next/link";
 import InternshipCard from "@/components/internships/InternshipCard";
 import InternshipCardSkeleton from "@/components/internships/InternshipCardSkeleton";
 import { useFeaturedInternships } from "@/hooks/useInternships";
+import type { Internship } from "@/lib/types";
 
 export default function FeaturedInternships() {
   const { data: internships, isLoading, isError } = useFeaturedInternships();
-  const normalizedInternships = Array.isArray(internships)
+  const pageResults = internships as { results?: Internship[] } | undefined;
+  const normalizedInternships: Internship[] = Array.isArray(internships)
     ? internships
-    : Array.isArray((internships as { results?: unknown[] } | undefined)?.results)
-      ? (internships as { results: unknown[] }).results
+    : Array.isArray(pageResults?.results)
+      ? pageResults.results
       : [];
 
   if (isError || (!isLoading && normalizedInternships.length === 0)) {

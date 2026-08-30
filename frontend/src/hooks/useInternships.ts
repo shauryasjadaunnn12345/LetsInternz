@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { internshipsApi, savedApi } from "@/lib/api";
-import type { InternshipListParams } from "@/lib/types";
+import type { Internship, InternshipListParams } from "@/lib/types";
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -23,14 +23,14 @@ export function useInternships(params: InternshipListParams) {
 }
 
 export function useFeaturedInternships() {
-  return useQuery({
+  return useQuery<Internship[], Error>({
     queryKey: ["internships", "featured"],
     queryFn: async () => {
       const data = await internshipsApi.featured();
 
-      if (Array.isArray(data)) return data;
-      if (data && Array.isArray((data as { results?: unknown[] }).results)) {
-        return (data as { results: unknown[] }).results;
+      if (Array.isArray(data)) return data as Internship[];
+      if (data && Array.isArray((data as { results?: Internship[] }).results)) {
+        return (data as { results: Internship[] }).results;
       }
 
       return [];

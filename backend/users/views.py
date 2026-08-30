@@ -6,8 +6,6 @@ from datetime import timedelta
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils import timezone
-from google.auth.transport import requests
-from google.oauth2 import id_token
 from rest_framework import parsers, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -80,37 +78,16 @@ class RegisterView(APIView):
 
 
 class GoogleLoginView(APIView):
-    """POST /api/auth/google-login/ — verify Google or Supabase auth and issue JWT tokens."""
+    """POST /api/auth/google-login/ — minimal Supabase-backed login sync for Google sign-ins."""
 
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        provider = request.data.get("provider")
-        credential = request.data.get("credential")
         email = request.data.get("email")
-
-        if provider == "supabase":
-            if not email:
-                return Response({"detail": "Supabase user email is required."}, status=400)
-            payload = {"email": email, "given_name": request.data.get("username") or email.split("@")[0]}
-        else:
-            if not credential:
-                return Response({"detail": "Google credential is required."}, status=400)
-
-            try:
-                payload = id_token.verify_oauth2_token(
-                    credential,
-                    requests.Request(),
-                    settings.GOOGLE_CLIENT_ID,
-                )
-            except ValueError:
-                return Response({"detail": "Invalid Google credential."}, status=400)
-
-        email = payload.get("email")
         if not email:
-            return Response({"detail": "Google account email is required."}, status=400)
+            return Response({"detail": "Supabase user email is required."}, status=400)
 
-        username = payload.get("given_name") or email.split("@")[0]
+        username = (request.data.get("username") or email.split("@")[0] or "user").strip()
         user, created = User.objects.get_or_create(
             email__iexact=email,
             defaults={
