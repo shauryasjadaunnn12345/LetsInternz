@@ -58,7 +58,7 @@ import warnings
 if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY and AWS_STORAGE_BUCKET_NAME:
     STORAGES = {
         "default": {"BACKEND": "storages.backends.s3.S3Storage"},
-        "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+        "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
     }
 else:
     warnings.warn(
@@ -70,7 +70,7 @@ else:
     )
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-        "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+        "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
     }
 
 # Serve static files directly via whitenoise (sits right after SecurityMiddleware).
