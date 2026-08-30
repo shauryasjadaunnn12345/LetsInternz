@@ -36,33 +36,24 @@ export default function InternshipDetailActions({
   const alreadyTracked =
     applications?.some((application) => application.internship?.id === internship.id) ?? false;
 
-  const requireAuth = () => {
-    if (!isAuthenticated) {
-      router.push(`/login?next=/internships/${internship.id}`);
-      return true;
-    }
-    return false;
-  };
+ const requireAuth = () => {
+  if (!isAuthenticated) {
+    router.push(`/login?next=/internships/${internship.id}`);
+    return true;
+  }
+  return false;
+};
 
-  const handleToggleSave = async () => {
-    if (requireAuth() || isTogglingSave) return;
-    setIsTogglingSave(true);
-    const previous = saved;
-    setSavedOverride(!previous);
-    try {
-      const result = await savedApi.toggle(internship.id);
-      setSavedOverride(result.saved);
-    } catch {
-      setSavedOverride(previous);
-    } finally {
-      setIsTogglingSave(false);
-    }
-  };
+const handleToggleSave = async () => {
+  if (requireAuth() || isTogglingSave) return;
+  setIsTogglingSave(true);
+  ...
+};
 
-  const handleTrack = () => {
-    if (requireAuth() || alreadyTracked || createApplication.isPending) return;
-    createApplication.mutate({ internship_id: internship.id });
-  };
+const handleTrack = () => {
+  if (requireAuth() || alreadyTracked || createApplication.isPending) return;
+  ...
+};
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
