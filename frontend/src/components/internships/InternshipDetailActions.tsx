@@ -37,15 +37,6 @@ export default function InternshipDetailActions({
   const alreadyTracked =
     applications?.some((application) => application.internship?.id === internship.id) ?? false;
 
-<<<<<<< HEAD
- const requireAuth = () => {
-  if (!isAuthenticated) {
-    router.push(`/login?next=/internships/${internship.id}`);
-    return true;
-  }
-  return false;
-};
-=======
   const requireAuth = () => {
     // TEMPORARY: Public browsing mode disables login redirects for internship details.
     if (!isAuthenticated && !isPublicBrowsingEnabled()) {
@@ -54,18 +45,26 @@ export default function InternshipDetailActions({
     }
     return false;
   };
->>>>>>> 7899a6e (Enable public browsing without authentication)
 
-const handleToggleSave = async () => {
-  if (requireAuth() || isTogglingSave) return;
-  setIsTogglingSave(true);
-  ...
-};
+  const handleToggleSave = async () => {
+    if (requireAuth() || isTogglingSave) return;
+    setIsTogglingSave(true);
+    const previous = saved;
+    setSavedOverride(!previous);
+    try {
+      const result = await savedApi.toggle(internship.id);
+      setSavedOverride(result.saved);
+    } catch {
+      setSavedOverride(previous);
+    } finally {
+      setIsTogglingSave(false);
+    }
+  };
 
-const handleTrack = () => {
-  if (requireAuth() || alreadyTracked || createApplication.isPending) return;
-  ...
-};
+  const handleTrack = () => {
+    if (requireAuth() || alreadyTracked || createApplication.isPending) return;
+    createApplication.mutate({ internship_id: internship.id });
+  };
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
