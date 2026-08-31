@@ -15,19 +15,21 @@ const FIVE_MINUTES = 5 * 60 * 1000;
  * the Kanban board needs all of them visible across columns at once, not
  * paginated. `page_size` is capped server-side (see config/pagination.py)
  * so this stays bounded even for a very active applicant. */
-export function useApplications() {
+export function useApplications(enabled = true) {
   return useQuery({
     queryKey: ["applications", "all"],
     queryFn: () => applicationsApi.list({ page_size: 200 }),
+    enabled,
     staleTime: FIVE_MINUTES,
     select: (data) => data.results,
   });
 }
 
-export function useApplicationStats() {
+export function useApplicationStats(enabled = true) {
   return useQuery({
     queryKey: ["applications", "stats"],
     queryFn: () => applicationsApi.stats(),
+    enabled,
     staleTime: FIVE_MINUTES,
   });
 }

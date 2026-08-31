@@ -20,7 +20,9 @@ export default function InternshipDetailActions({
 }) {
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
-  const { data: applications } = useApplications();
+  // TEMPORARY: Public browsing mode disables auth redirect.
+  // Re-enable authentication requirement when public browsing mode is removed.
+  const { data: applications } = useApplications(Boolean(isAuthenticated));
   const createApplication = useCreateApplication();
 
   // The page itself is fetched server-side with no user context (so the
