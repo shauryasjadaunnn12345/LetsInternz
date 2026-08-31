@@ -27,10 +27,17 @@ export default function ProfilePage() {
 
   const completion = profile?.profile_completion ?? 0;
   const displayName = profile?.full_name || user?.username || "Your profile";
+  const isSignedIn = Boolean(user || profile);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <h1 className="font-display text-2xl font-semibold text-ink">My Profile</h1>
+
+      {!isSignedIn && (
+        <div className="mt-4 rounded-lg border border-dashed border-border bg-paper px-4 py-3 text-sm text-slate">
+          You&apos;re not signed in. Your profile is empty until you log in.
+        </div>
+      )}
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Left column */}

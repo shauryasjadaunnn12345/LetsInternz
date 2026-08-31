@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useApplications, useCreateApplication } from "@/hooks/useApplications";
 import { useSavedInternshipIds } from "@/hooks/useInternships";
 import { applicationsApi, savedApi } from "@/lib/api";
+import { isPublicBrowsingEnabled } from "@/lib/publicBrowsing";
 import type { Internship } from "@/lib/types";
 import { useAuthStore } from "@/store/authStore";
 
@@ -36,6 +37,7 @@ export default function InternshipDetailActions({
   const alreadyTracked =
     applications?.some((application) => application.internship?.id === internship.id) ?? false;
 
+<<<<<<< HEAD
  const requireAuth = () => {
   if (!isAuthenticated) {
     router.push(`/login?next=/internships/${internship.id}`);
@@ -43,6 +45,16 @@ export default function InternshipDetailActions({
   }
   return false;
 };
+=======
+  const requireAuth = () => {
+    // TEMPORARY: Public browsing mode disables login redirects for internship details.
+    if (!isAuthenticated && !isPublicBrowsingEnabled()) {
+      router.push(`/login?next=/internships/${internship.id}`);
+      return true;
+    }
+    return false;
+  };
+>>>>>>> 7899a6e (Enable public browsing without authentication)
 
 const handleToggleSave = async () => {
   if (requireAuth() || isTogglingSave) return;

@@ -1,4 +1,6 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+
+import { isPublicBrowsingEnabled } from "@/lib/publicBrowsing";
 import type {
   Application,
   ApplicationCreatePayload,
@@ -126,6 +128,12 @@ function rejectQueue(error: unknown) {
 
 function redirectToLogin() {
   clearAuthTokens();
+
+  // TEMPORARY: Public browsing mode disables auth redirects so public pages remain accessible.
+  if (isPublicBrowsingEnabled()) {
+    return;
+  }
+
   if (typeof window !== "undefined") {
     // Hard navigation, not router.push() — this runs inside an axios
     // interceptor, outside React's render tree, so useRouter isn't

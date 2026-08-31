@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import InternshipLogo from "@/components/internships/InternshipLogo";
 import { savedApi } from "@/lib/api";
+import { isPublicBrowsingEnabled } from "@/lib/publicBrowsing";
 import { sourceColor } from "@/lib/sourceColor";
 import type { Internship } from "@/lib/types";
 import { useAuthStore } from "@/store/authStore";
@@ -36,7 +37,8 @@ export default function InternshipCard({
   const [isToggling, setIsToggling] = useState(false);
 
   const handleToggleSave = async () => {
-    if (!isAuthenticated) {
+    // TEMPORARY: Public browsing mode keeps save actions available without blocking users.
+    if (!isAuthenticated && !isPublicBrowsingEnabled()) {
       router.push("/login");
       return;
     }

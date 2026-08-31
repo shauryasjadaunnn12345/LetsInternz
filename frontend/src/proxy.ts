@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import { isPublicBrowsingEnabled } from "@/lib/publicBrowsing";
+
 const PROTECTED_PREFIXES = ["/dashboard", "/applications", "/saved", "/profile", "/settings", "/onboarding"];
 const AUTH_ONLY_PATHS = new Set(["/login", "/signup", "/onboarding"]);
 
@@ -33,6 +35,13 @@ function isTokenValid(token: string | undefined): boolean {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // TEMPORARY: Public browsing mode disables auth gating for all public pages.
+  // Keep auth logic in place so it can be reinstated later with the flip of a flag.
+  if (isPublicBrowsingEnabled()) {
+    return NextResponse.next();
+  }
+
   const token = request.cookies.get("access_token")?.value;
   const isAuthenticated = isTokenValid(token);
 
