@@ -64,14 +64,7 @@ export default function Hero() {
           >
             {isAuthenticated ? "Go to Dashboard" : "Browse Internships"}
           </Link>
-          {!isAuthenticated && (
-            <Link
-              href="/signup"
-              className="rounded-lg border border-border bg-paper-raised px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink-soft"
-            >
-              Sign Up Free
-            </Link>
-          )}
+          {/* Signup CTA disabled while public browsing is active. */}
         </div>
 
         <div className="mx-auto mt-10 max-w-xl">

@@ -23,13 +23,7 @@ const FOOTER_LINKS = [
       { href: "/dashboard", label: "Dashboard" },
     ],
   },
-  {
-    heading: "Account",
-    links: [
-      { href: "/login", label: "Login" },
-      { href: "/signup", label: "Sign Up" },
-    ],
-  },
+  // Login/signup links are intentionally disabled in public browsing mode.
   {
     heading: "Legal",
     links: [

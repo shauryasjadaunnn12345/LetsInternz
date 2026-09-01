@@ -68,18 +68,7 @@ export default function Navbar() {
         <div className="hidden md:flex md:items-center md:gap-3">
           {!isAuthenticated ? (
             <>
-              <Link
-                href="/login"
-                className="text-sm font-medium text-ink-soft transition-colors hover:text-ink"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-lg bg-ink px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-ink-soft"
-              >
-                Sign Up
-              </Link>
+              {/* Login/signup are intentionally disabled for the public browsing flow. */}
             </>
           ) : (
             <DropdownMenu.Root>
@@ -204,20 +193,7 @@ export default function Navbar() {
               <div className="mt-auto flex flex-col gap-2 border-t border-border pt-4">
                 {!isAuthenticated ? (
                   <>
-                    <Link
-                      href="/login"
-                      onClick={() => setDrawerOpen(false)}
-                      className="rounded-lg border border-border px-4 py-2.5 text-center text-sm font-semibold text-ink hover:bg-paper"
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      href="/signup"
-                      onClick={() => setDrawerOpen(false)}
-                      className="rounded-lg bg-ink px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-ink-soft"
-                    >
-                      Sign Up
-                    </Link>
+                    {/* Login/signup are intentionally disabled for the public browsing flow. */}
                   </>
                 ) : (
                   <button

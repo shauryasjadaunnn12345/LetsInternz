@@ -39,7 +39,6 @@ export default function InternshipCard({
   const handleToggleSave = async () => {
     // TEMPORARY: Public browsing mode keeps save actions available without blocking users.
     if (!isAuthenticated && !isPublicBrowsingEnabled()) {
-      router.push("/login");
       return;
     }
     if (isToggling) return;

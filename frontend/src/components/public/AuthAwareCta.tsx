@@ -7,7 +7,7 @@ import { useAuthStore } from "@/store/authStore";
 export function AuthAwareCta({
   primaryLabel = "Browse Internships",
   primaryHref = "/internships",
-  secondaryLabel = "Sign Up Free",
+  secondaryLabel = "",
   secondaryHref = "/signup",
   variant = "default",
 }: {
@@ -34,11 +34,7 @@ export function AuthAwareCta({
       <Link href={isAuthenticated ? "/dashboard" : primaryHref} className={primaryClassName}>
         {isAuthenticated ? "Go to Dashboard" : primaryLabel}
       </Link>
-      {!isAuthenticated && (
-        <Link href={secondaryHref} className={secondaryClassName}>
-          {secondaryLabel}
-        </Link>
-      )}
+      {/* Secondary signup CTA is intentionally disabled while public browsing is active. */}
     </div>
   );
 }

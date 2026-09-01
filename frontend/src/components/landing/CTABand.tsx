@@ -18,21 +18,14 @@ export default function CTABand() {
           application organized from here on out.
         </p>
         <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          {!isAuthenticated ? (
-            <Link
-              href="/signup"
-              className="rounded-lg bg-marigold px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-marigold-dark"
-            >
-              Sign Up Free
-            </Link>
-          ) : (
+          {isAuthenticated ? (
             <Link
               href="/dashboard"
               className="rounded-lg bg-marigold px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-marigold-dark"
             >
               Go to Dashboard
             </Link>
-          )}
+          ) : null}
           <Link
             href="/internships"
             className="rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"

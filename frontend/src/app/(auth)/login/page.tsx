@@ -8,9 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
-  return (
-    <Suspense fallback={null}>
-      <LoginForm />
-    </Suspense>
-  );
+  return null;
 }
