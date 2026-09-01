@@ -232,13 +232,15 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 # ---------------------------------------------------------------------------
-# Celery (broker + result backend on Redis)
+# Celery (only if Redis is intentionally configured for task broker/result
+# backend. The app does not require Redis for Django's cache or for the
+# public internship API.
 # ---------------------------------------------------------------------------
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+REDIS_URL = os.getenv("REDIS_URL")
 
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_BROKER_URL = REDIS_URL or ""
+CELERY_RESULT_BACKEND = REDIS_URL or ""
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
@@ -247,15 +249,30 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 
 # ---------------------------------------------------------------------------
-# Cache (Redis)
+# Cache
+#
+# Default to LocMemCache so Django cache_page() and other cache usage work
+# without requiring a separate Redis service. A Redis cache is only used when
+# explicitly enabled via CACHE_BACKEND=redis and REDIS_URL; otherwise we keep
+# the app self-contained and safe in production.
 # ---------------------------------------------------------------------------
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": REDIS_URL,
+CACHE_BACKEND = os.getenv("CACHE_BACKEND", "locmem").strip().lower()
+
+if CACHE_BACKEND == "redis" and REDIS_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_URL,
+        }
     }
-}
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "letsinternz-cache",
+        }
+    }
 
 
 # ---------------------------------------------------------------------------

@@ -222,13 +222,21 @@ CORS_ALLOWED_ORIGINS = env_list(
 CORS_ALLOW_CREDENTIALS = True
 
 
-# Celery
+# Celery (optional; do not default to localhost Redis)
 
-REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
+REDIS_URL = os.getenv("REDIS_URL")
+CELERY_BROKER_URL = REDIS_URL or ""
+CELERY_RESULT_BACKEND = REDIS_URL or ""
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# Safe default when Redis is not intentionally configured.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "letsinternz-cache",
+    }
+}

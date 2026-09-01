@@ -16,7 +16,7 @@ from .serializers import (
     InternshipSourceSerializer,
 )
 
-LIST_CACHE_SECONDS = 60 * 5  # 5 minutes, backed by the Redis cache backend.
+LIST_CACHE_SECONDS = 60 * 5  # 5 minutes, backed by the configured Django cache backend.
 
 # Number of scored candidates fetched for the recommendation algorithm.
 RECOMMENDATION_CANDIDATE_POOL_SIZE = 300

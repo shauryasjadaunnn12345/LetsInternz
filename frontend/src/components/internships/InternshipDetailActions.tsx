@@ -89,6 +89,7 @@ export default function InternshipDetailActions({
         <ExternalLink className="h-4 w-4" />
       </a>
 
+      {/*
       <button
         type="button"
         onClick={handleToggleSave}
@@ -121,6 +122,7 @@ export default function InternshipDetailActions({
           </>
         )}
       </button>
+      */}
     </div>
   );
 }

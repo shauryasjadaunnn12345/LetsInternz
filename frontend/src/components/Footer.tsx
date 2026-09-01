@@ -20,7 +20,7 @@ const FOOTER_LINKS = [
     links: [
       { href: "/internships", label: "Browse Internships" },
       { href: "/how-it-works", label: "How It Works" },
-      { href: "/dashboard", label: "Dashboard" },
+      // { href: "/dashboard", label: "Dashboard" },
     ],
   },
   // Login/signup links are intentionally disabled in public browsing mode.
