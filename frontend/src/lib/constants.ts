@@ -238,30 +238,18 @@ export const LINKEDIN_URL = "https://www.linkedin.com/company/135163925";
 //   check resume.io's own site footer for their current partner program.
 // ---------------------------------------------------------------------------
 
-const COURSERA_AFFILIATE_ID = ""; // e.g. an Impact Radius "irclickid" or partner ID
-const RESUME_IO_AFFILIATE_ID = ""; // e.g. a partner/ref code
+const COURSE_URL = "https://lvrg.in/cJLzO";
+const INTERVIEW_PREP_URL = "https://www.myvoicecoach.in/?ref=VCSHAU98R4";
+const RESUME_BUILDER_URL = "https://resumegyani.in/signup?ref=SHAURSHCA";
 
-/** Coursera search results for a given skill/domain, so "Prepare for this
- * role" links somewhere relevant rather than Coursera's homepage. */
-export function buildCourseraLink(query: string): string {
-  const params = new URLSearchParams({ query });
-  if (COURSERA_AFFILIATE_ID) params.set("irclickid", COURSERA_AFFILIATE_ID);
-  return `https://www.coursera.org/search?${params.toString()}`;
+export function buildCourseraLink(_query: string): string {
+  return COURSE_URL;
 }
 
 export function buildResumeIoLink(): string {
-  return RESUME_IO_AFFILIATE_ID
-    ? `https://resume.io/?ref=${RESUME_IO_AFFILIATE_ID}`
-    : "https://resume.io/";
+  return RESUME_BUILDER_URL;
 }
 
-/** Interview-prep search, scoped by domain so a marketing internship gets
- * marketing-interview content rather than generic/software-only prep.
- * Reuses the Coursera affiliate account for now (real, working link from
- * day one, no dead button while waiting on a dedicated partner) — swap the
- * base URL here for a dedicated interview-coaching affiliate program
- * (e.g. Big Interview, Exponent, Prepfully) once you've signed up for one;
- * every call site stays the same. */
-export function buildInterviewPrepLink(domainLabel: string): string {
-  return buildCourseraLink(`${domainLabel} interview preparation`);
+export function buildInterviewPrepLink(_domainLabel: string): string {
+  return INTERVIEW_PREP_URL;
 }
